@@ -1,0 +1,48 @@
+```text
+============================================================
+PROJECT INFORMATION & CODE EXPLANATION: EXPENSE TRACKER
+============================================================
+
+This file explains how the Python script (main.py) works, breaking down its core components, libraries, and functions.
+
+---
+1. LIBRARIES USED
+---
+- json: A built-in Python module used for reading and writing JSON data files. It allows the expense tracker to save data permanently onto your hard drive (`data.json`) so it doesn't get lost when the program closes.
+
+---
+2. DATA STORAGE & PERSISTENCE
+---
+- Startup Loading: When the program starts, it attempts to open `data.json` in read mode ("r") and loads the saved dictionary of expenses into the `total_expense` variable[cite: 1].
+- Error Handling (`try-except`): 
+  - If `data.json` doesn't exist yet (first time running the app), a `FileNotFoundError` is caught, and `total_expense` defaults to an empty dictionary[cite: 1].
+  - If the file is corrupted or empty, a `json.JSONDecodeError` is caught, also resetting `total_expense` to an empty dictionary to prevent crashes[cite: 1].
+- `save_expenses()` function: Whenever a new expense is added, this function opens `data.json` in write mode ("w") and dumps the current `total_expense` dictionary back into the file formatted with an indentation of 4 spaces[cite: 1].
+
+---
+3. CORE FUNCTIONS
+---
+- `add_expense(name, amount)`[cite: 1]:
+  - Validates that the expense name is not empty and the amount is not negative[cite: 1].
+  - Checks if the expense already exists in the dictionary. If it does, it adds the new amount to the existing total for that name; otherwise, it creates a new key-value pair[cite: 1].
+  - Calls `save_expenses()` to update the local JSON file immediately[cite: 1].
+
+- `see_total()`[cite: 1]:
+  - Calculates the sum of all values in the `total_expense` dictionary[cite: 1].
+  - Prints a breakdown of each expense item and its price formatted to two decimal places, followed by the grand total[cite: 1]. If no expenses exist, it displays $0.00[cite: 1].
+
+- `see_all_expenses()`[cite: 1]:
+  - Iterates through the dictionary and prints a clean list of every recorded expense and its corresponding cost[cite: 1].
+
+---
+4. MAIN INTERACTIVE LOOP
+---
+- The script runs inside a continuous `while True` loop, prompting the user for an expense name or a special command[cite: 1].
+- Command Handling:
+  - 'exit': Breaks the loop and terminates the program[cite: 1].
+  - 'see total': Triggers the `see_total()` function[cite: 1].
+  - 'see all expenses': Triggers the `see_all_expenses()` function[cite: 1].
+- Input & Exception Handling:
+  - If a valid expense name is provided, it asks for the expense amount[cite: 1].
+  - Typing 'skip' cancels the current entry[cite: 1].
+  - It uses a `try-except` block to catch `ValueError` if the user types letters instead of a valid number for the price, ensuring the app won't crash due to typos[cite: 1].
